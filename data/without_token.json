@@ -1,0 +1,15 @@
+{
+    "data": [
+        {
+            "node": {
+                "id": 38691,
+                "title": "Dr. Stone",
+                "main_picture": {
+                    "medium": "https://api-cdn.myanimelist.net/images/anime/1613/102576.jpg",
+                    "large": "https://api-cdn.myanimelist.net/images/anime/1613/102576l.jpg"
+                }
+            }
+        }
+    ],
+    "paging": {}
+}
