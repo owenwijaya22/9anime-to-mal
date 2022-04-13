@@ -48,9 +48,11 @@ def generate_access_token(client_id, client_secret, authorization_code,
         print('Token saved in "./data/access_token.json"')
 
 
-if __name__ == '__main__':
+def main():
     code_verifier = code_challenge = get_new_code_verifier()
     generate_url(client_id, code_challenge)
     authorization_code = generate_code()
     generate_access_token(client_id, client_secret, authorization_code,
                           code_verifier)
+if __name__ == '__main__':
+    main()
