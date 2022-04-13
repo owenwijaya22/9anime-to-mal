@@ -5,7 +5,7 @@ from get_access_token import client_id, client_secret
 def get_refresh_token():
     with open('./data/access_token.json', 'r+') as f:
         refresh_token = json.load(f)['refresh_token']
-
+    return refresh_token
 def get_fresh_access_token(refresh_token):
     refresh_token_url = 'https://myanimelist.net/v1/oauth2/token'
 
