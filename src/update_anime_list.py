@@ -64,4 +64,3 @@ class UpdateAnimeList:
             except Exception as e:
                 print(Exception)
 
-    print(f"The program took {time.time()-time_now} seconds")
