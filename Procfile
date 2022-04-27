@@ -1,1 +1,1 @@
-web: gunicorn mal_api:app
+web: gunicorn mal-api:app
