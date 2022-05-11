@@ -1,8 +1,9 @@
+from geventwebsocket import WebSocketApplication
 import requests
 import secrets
 import json
 import webbrowser
-import pathlib
+import webserver
 
 
 class AccessToken:
@@ -22,19 +23,17 @@ class AccessToken:
         url = f'https://myanimelist.net/v1/oauth2/authorize?response_type=code&client_id={client_id}&state=YOUR_STATE&code_challenge={code_challenge}&code_challenge_method=plain'
         webbrowser.open(url)
 
-    #get the authorization code made after the user authenticates mal
-    def generate_code(self):
-        authorization_code = input('Paste the authorization code: ').strip()
-        return authorization_code
+    def get_auth_code(self):
+        with open('./data/auth_code.json', 'r') as file:
+            self.auth_code = json.load(file)["auth_code"]
 
     #get the access token to myanimelist's api
-    def generate_access_token(self, client_id, client_secret, authorization_code,
-                            code_verifier):
+    def generate_access_token(self, code_verifier):
         url = 'https://myanimelist.net/v1/oauth2/token'
         payload = {
-            'client_id': client_id,
-            'client_secret': client_secret,
-            'code': authorization_code,
+            'client_id': self.client_id,
+            'client_secret': self.client_secret,
+            'code': self.auth_code,
             'code_verifier': code_verifier,
             'grant_type': 'authorization_code'
         }
@@ -44,17 +43,18 @@ class AccessToken:
         access_token = r.json()
         print('Token generated successfully!')
 
-        #create data directory to put all the json files/ configs
-        p = pathlib.Path('./data')
-        p.mkdir(exist_ok=True)
-
         with open('./data/access_token.json', 'w') as f:
             json.dump(access_token, f, indent=4)
             print('Token saved in "./data/access_token.json"')
 
     def main(self):
+        HOST = 'localhost'
+        PORT = 5000
         code_verifier = code_challenge = self.get_new_code_verifier()
         self.generate_url(self.client_id, code_challenge)
-        authorization_code = self.generate_code()
-        self.generate_access_token(self.client_id, self.client_secret,
-                                   authorization_code, code_verifier)
+
+        webserver.start_server_thread(HOST, PORT)
+        webserver.auth_code_received.wait()
+
+        self.get_auth_code()
+        self.generate_access_token(code_verifier)
