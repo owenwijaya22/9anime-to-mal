@@ -26,7 +26,7 @@ def retrieve_auth_code():
             
         # Tell the main thread that we received the code
         auth_code_received.set()
-        return '<p><span style="font-family: consolas">Done! You can go back to your application.</p>'
+        return '<p><span style="font-family: consolas">Done! You can go close this tab and go back to your application.</p>'
 
 
 def start_server_thread(host: str, port: int):

@@ -1,4 +1,3 @@
-from geventwebsocket import WebSocketApplication
 import requests
 import secrets
 import json
@@ -45,7 +44,7 @@ class AccessToken:
 
         with open('./data/access_token.json', 'w') as f:
             json.dump(access_token, f, indent=4)
-            print('Token saved in "./data/access_token.json"')
+            print('\nToken saved in "./data/access_token.json"')
 
     def main(self):
         HOST = 'localhost'
@@ -58,3 +57,6 @@ class AccessToken:
 
         self.get_auth_code()
         self.generate_access_token(code_verifier)
+
+access_token_bot = AccessToken()
+access_token_bot.main()
