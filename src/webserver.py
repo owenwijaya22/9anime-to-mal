@@ -14,7 +14,7 @@ def retrieve_auth_code():
     # Read the Authorisation Code from the query string of the URL
     auth_code = request.args.get('code', None, str)
     if auth_code is None:
-        return '<p><span style="font-family: consolas">code</span> field not found.</p>'
+        return '<center> <p><span style="font-family: lexend deca"> <font size= "14"> Field not found.</p> </center>'
     else:
         #create data directory to put all the json files/ configs
         p = pathlib.Path('./data')
@@ -26,7 +26,7 @@ def retrieve_auth_code():
             
         # Tell the main thread that we received the code
         auth_code_received.set()
-        return '<p><span style="font-family: consolas">Done! You can go close this tab and go back to your application.</p>'
+        return '<center> <p><span style="font-family: lexend deca"> <font size= "14"> Done! You can go close this tab and go back to your application.</p> </center>'
 
 
 def start_server_thread(host: str, port: int):
